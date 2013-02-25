@@ -15,6 +15,8 @@ import com.jme3.scene.shape.Box;
 
 //This is a comment from mike
 public class Main extends SimpleApplication {
+    
+    Mocap moCap;
 
     public static void main(String[] args) {
         Main app = new Main();
@@ -23,6 +25,7 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        moCap = new Mocap();
         Box b = new Box(Vector3f.ZERO, 1, 1, 1);
         Geometry geom = new Geometry("Box", b);
 
