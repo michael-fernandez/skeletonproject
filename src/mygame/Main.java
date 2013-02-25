@@ -13,7 +13,6 @@ import com.jme3.scene.shape.Box;
  * @author normenhansen
  */
 
-//This is a comment from mike
 public class Main extends SimpleApplication {
     
     Mocap moCap;
