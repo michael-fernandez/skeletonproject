@@ -16,7 +16,7 @@ import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Cylinder;
 
 public class Main extends SimpleApplication {
-    
+
     private BulletAppState buildAppState; //look up AppStates (not entirely sure what they are
     Material matG, matB, matR, matW;
     KinectGames kinect;
@@ -34,14 +34,14 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         moCap = new Mocap();
         kinect = new KinectGames(this);
-        
+
         //initialize game
         initMaterials();
         initLight();
         //initFloor();
         initCoord();
         initPhysics();
-        
+
         //set camera
         cam.setLocation(new Vector3f(5f, 3f, 5f));
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);

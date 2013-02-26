@@ -2,6 +2,11 @@ package mygame;
 
 import kinecttcpclient.KinectTCPClient;
 
+/*This class handles the kinect data, either from
+ * 1) The kinect it self
+ * 2) The Mocap class, which gives preloaded data for debugging.
+ */
+
 public class KinectGames {
 
     boolean mocap = true;
