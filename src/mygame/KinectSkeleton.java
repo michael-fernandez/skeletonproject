@@ -18,10 +18,10 @@ import com.jme3.scene.shape.Cylinder;
 public class KinectSkeleton {
 
     Node skeleton = new Node(); // this is the skeleton, which connects to the root node. 
-    //I moved this local as no one else will need this. Geometry[] bones; //will make up the person
+    //I moved bones local. Change it back if we will need it within main. 
 
     
-    // you may wnat to move most of this out of the constructor.
+    // This should initalize the skeleton. Movements should be handled in update Movements
     public KinectSkeleton(Main main) {
         Material matW = new Material(main.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         matW.setColor("Color", ColorRGBA.White);
@@ -48,6 +48,10 @@ public class KinectSkeleton {
         }
     }
 
+    public void updateMovements(){
+        
+    }
+    
     private void setConnectiveTransform(float[] p1, float[] p2, Geometry c) {
         //Find Direction
         Vector3f u = new Vector3f(p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]);
