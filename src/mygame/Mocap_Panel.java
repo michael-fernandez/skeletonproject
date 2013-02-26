@@ -6,18 +6,18 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import javax.swing.JPanel;
 
-// Class: SkeletonPanel
+// Class: Mocap_Panel
 // ========================================================================
 /** Skeleton Panel, shows skeleton data.
  *
  */
-public class SkeletonPanel extends JPanel {
+public class Mocap_Panel extends JPanel {
 
     int sizeX, sizeY;
     double scale;
     private Mocap moc;
 
-    public SkeletonPanel(int sx, int sy, Mocap m) {
+    public Mocap_Panel(int sx, int sy, Mocap m) {
         super();
         moc = m;
         sizeX = sx;

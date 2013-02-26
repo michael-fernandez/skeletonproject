@@ -25,9 +25,7 @@ public class Main extends SimpleApplication {
     KinectInterface kinect;
     Environment environment;
     Mocap moCap;
-    Geometry[] bones; //will make up the person
-    Cylinder c = new Cylinder(10, 10, 0.04f, 1f, true);
-    Node skeleton = new Node(); //attach skeleton of person to it's own node
+    
 
     public static void main(String[] args) {
         Main app = new Main();
@@ -39,14 +37,17 @@ public class Main extends SimpleApplication {
         moCap = new Mocap();
         kinect = new KinectInterface(this);
         environment=new Environment(this);
+        KinectSkeleton kinectskeleton=new KinectSkeleton(this);
 
-        //initialize game
-        initMaterials();
+        //Basic Lighting and Coordinates
+        //initMaterials();
         initLight();
-        //initFloor();
         initCoord();
         initPhysics();
+        
+        //Attach objects to the rootnode here:
         rootNode.attachChild(environment.ground);
+        rootNode.attachChild(kinectskeleton.skeleton);
 
         //set camera
         cam.setLocation(new Vector3f(5f, 3f, 5f));
@@ -60,17 +61,6 @@ public class Main extends SimpleApplication {
         //TODO: add update code
     }
 
-    public void initMaterials() {
-        //set matrials and colors for geometries
-        matG = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        matG.setColor("Color", ColorRGBA.Green);
-        matB = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        matB.setColor("Color", ColorRGBA.Blue);
-        matR = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        matR.setColor("Color", ColorRGBA.Red);
-        matW = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        matW.setColor("Color", ColorRGBA.White);
-    }
 
     public void initLight() {
         //set directed light for diffuse lighting
@@ -95,47 +85,10 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(Zarrow);
     }
 
-    // Transform the Cylinder c such that it connects p1,p2
-    private void setConnectiveTransform(float[] p1, float[] p2, Geometry c) {
-        //Find Direction
-        Vector3f u = new Vector3f(p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]);
-        float length = u.length();
-        u = u.normalize();
-        //Set Rotation
-        Vector3f v = u.cross(Vector3f.UNIT_Z);
-        Vector3f w = u.cross(v);
-        Matrix3f m = new Matrix3f(u.x, v.x, w.x, u.y, v.y, w.y, u.z, v.z, w.z);
-        c.setLocalRotation(m);
-        //Set Scaling
-        c.setLocalScale(1f, 1f, length);
-        //Set Translation
-        float[] center = {(p1[0] + p2[0]) / 2, (p1[1] + p2[1]) / 2, (p1[2] + p2[2]) / 2};
-        c.setLocalTranslation(center[0], center[1], center[2]);
-    }
-
+    
     //Please move this
     public void initPhysics() {
-        //pick joints you want
-        if (kinect.joint != null) {
-            float[][] jointArray = {{(float) kinect.joint[10][1], (float) kinect.joint[10][2], (float) kinect.joint[10][3]}, {(float) kinect.joint[11][1], (float) kinect.joint[11][2], (float) kinect.joint[11][3]}};
-            bones = new Geometry[jointArray.length];
-            //start loop to connect all joints
-            for (int i = 0; i < bones.length; i++) {
-                //set geometry, connect and transform cylinder, set material
-                bones[i] = new Geometry("Cylinder", c);
-                setConnectiveTransform(jointArray[0], jointArray[1], bones[i]);
-                bones[i].setMaterial(matW);
-                //attach physics to bones
-                RigidBodyControl phy = new RigidBodyControl(0f); //0f = 0 mass
-                bones[i].addControl(phy);
-                phy.setKinematic(true);
-                //attach physics to world
-                buildAppState.getPhysicsSpace().add(phy);
-                //attach to node so we can play
-                skeleton.attachChild(bones[i]);
-            }
-            rootNode.attachChild(skeleton);
-        }
+
     }
 
     @Override

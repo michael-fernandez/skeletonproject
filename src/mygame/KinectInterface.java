@@ -7,14 +7,14 @@ import kinecttcpclient.KinectTCPClient;
  * 2) The Mocap class, which gives preloaded data for debugging.
  */
 
-public class Kinect {
+public class KinectInterface {
 
     boolean mocap = true;
     KinectTCPClient c1;
     int[][] joint;
     Main m;
 
-    public Kinect(Main m) {
+    public KinectInterface(Main m) {
         this.m = m;
         String ipaddress = "127.0.0.1";
         int port = 8001;

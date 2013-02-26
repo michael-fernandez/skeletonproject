@@ -28,7 +28,7 @@ import kinecttcpclient.KinectTCPClient;
 
 public class Mocap extends Thread implements ActionListener {
 
-    SkeletonPanel skp;
+    Mocap_Panel skp;
     KinectTCPClient kinect;
     int[][] joints;
     protected int state;
@@ -40,7 +40,7 @@ public class Mocap extends Thread implements ActionListener {
     public Mocap() {
         // GUI
         JFrame windowFrame;
-        skp = new SkeletonPanel(300, 300, this);
+        skp = new Mocap_Panel(300, 300, this);
         windowFrame = new JFrame();
         windowFrame.setLayout(new BorderLayout());
         windowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
