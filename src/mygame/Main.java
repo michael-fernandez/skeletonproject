@@ -15,11 +15,15 @@ import com.jme3.scene.debug.Arrow;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Cylinder;
 
+
+
 public class Main extends SimpleApplication {
 
-    private BulletAppState buildAppState; //look up AppStates (not entirely sure what they are
+    BulletAppState buildAppState; //look up AppStates (not entirely sure what they are
+    //These materials should not be here. Move to their local classes
     Material matG, matB, matR, matW;
-    KinectGames kinect;
+    Kinect kinect;
+    Environment environment;
     Mocap moCap;
     Geometry[] bones; //will make up the person
     Cylinder c = new Cylinder(10, 10, 0.04f, 1f, true);
@@ -33,7 +37,8 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         moCap = new Mocap();
-        kinect = new KinectGames(this);
+        kinect = new Kinect(this);
+        environment=new Environment(this);
 
         //initialize game
         initMaterials();
@@ -41,6 +46,7 @@ public class Main extends SimpleApplication {
         //initFloor();
         initCoord();
         initPhysics();
+        rootNode.attachChild(environment.ground);
 
         //set camera
         cam.setLocation(new Vector3f(5f, 3f, 5f));
@@ -89,14 +95,6 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(Zarrow);
     }
 
-    public void initFloor() {
-        //create the ground we play on
-        Box b = new Box(Vector3f.ZERO, 10f, 0.1f, 5f);
-        Geometry ground = new Geometry("Box", b);
-        ground.setMaterial(matG);
-        rootNode.attachChild(ground);
-    }
-
     // Transform the Cylinder c such that it connects p1,p2
     private void setConnectiveTransform(float[] p1, float[] p2, Geometry c) {
         //Find Direction
@@ -115,6 +113,7 @@ public class Main extends SimpleApplication {
         c.setLocalTranslation(center[0], center[1], center[2]);
     }
 
+    //Please move this
     public void initPhysics() {
         //pick joints you want
         if (kinect.joint != null) {
