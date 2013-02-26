@@ -2,6 +2,7 @@ package mygame;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -45,7 +46,9 @@ public class Main extends SimpleApplication {
         
         //set up the physics
         bulletAppState = new BulletAppState();
+        
         stateManager.attach(bulletAppState);
+        bulletAppState.getPhysicsSpace().add(environment.rigidBody);
     }
 
     @Override

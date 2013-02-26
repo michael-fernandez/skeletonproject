@@ -4,6 +4,9 @@
  */
 package mygame;
 
+import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.collision.shapes.PlaneCollisionShape;
+import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
@@ -23,12 +26,14 @@ public class Environment {
 
     Geometry ground;  //this connects to the root node
     Texture text;
+    CollisionShape shape;
+    RigidBodyControl rigidBody;
     
     public Environment(Main main) {
         initFloor(main);
     }
 
-    public void initFloor(Main main) {
+    public final void initFloor(Main main) {
         //create the ground we play on
         Box b = new Box(Vector3f.ZERO, 10f, 0.1f, 10f);
     
@@ -43,6 +48,8 @@ public class Environment {
         //matG.setColor("Color", ColorRGBA.Green);
         ground.setMaterial(matG);
         
-        
+        shape = new PlaneCollisionShape();
+        rigidBody = new RigidBodyControl(shape,0f);
+        ground.addControl(rigidBody);
     }
 }
