@@ -10,6 +10,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.debug.Arrow;
+import com.jme3.util.SkyFactory;
 
 public class Main extends SimpleApplication {
 
@@ -38,6 +39,7 @@ public class Main extends SimpleApplication {
         //Attach objects to the rootnode here:
         rootNode.attachChild(environment.ground);
         rootNode.attachChild(kinectskeleton.skeleton);
+        rootNode.attachChild(SkyFactory.createSky(assetManager, "mygame/skysphere.jpg", true));
 
         //set camera
         cam.setLocation(new Vector3f(5f, 3f, 5f));

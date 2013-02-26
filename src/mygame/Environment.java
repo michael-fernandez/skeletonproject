@@ -44,8 +44,6 @@ public class Environment {
         text = main.getAssetManager().loadTexture("mygame/grass2.png");
         text.setWrap(Texture.WrapMode.Repeat);
         matG.setTexture("ColorMap", text);
-        //matG.setTexture("Grass Texture", text);
-        //matG.setColor("Color", ColorRGBA.Green);
         ground.setMaterial(matG);
         
         shape = new PlaneCollisionShape();
