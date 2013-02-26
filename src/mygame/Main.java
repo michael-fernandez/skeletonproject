@@ -22,7 +22,7 @@ public class Main extends SimpleApplication {
     BulletAppState buildAppState; //look up AppStates (not entirely sure what they are
     //These materials should not be here. Move to their local classes
     Material matG, matB, matR, matW;
-    Kinect kinect;
+    KinectInterface kinect;
     Environment environment;
     Mocap moCap;
     Geometry[] bones; //will make up the person
@@ -37,7 +37,7 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         moCap = new Mocap();
-        kinect = new Kinect(this);
+        kinect = new KinectInterface(this);
         environment=new Environment(this);
 
         //initialize game
