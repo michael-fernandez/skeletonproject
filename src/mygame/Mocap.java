@@ -3,7 +3,6 @@ package mygame;
 /*Provided by Rolf for debugging purposes
  * 
  */
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -29,7 +28,7 @@ import kinecttcpclient.KinectTCPClient;
 public class Mocap extends Thread implements ActionListener {
 
     Mocap_Panel skp;
-    KinectTCPClient kinect;
+//    KinectTCPClient kinect;
     int[][] joints;
     protected int state;
     protected final int STOP = 0, PLAY = 1, RECORD = 2;
@@ -46,6 +45,7 @@ public class Mocap extends Thread implements ActionListener {
         windowFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel southPanel = new JPanel();
         southPanel.setLayout(new GridLayout(1, 3));
+
         JButton stop = new JButton("Stop");
         stop.setActionCommand("stop");
         stop.addActionListener(this);
@@ -79,14 +79,20 @@ public class Mocap extends Thread implements ActionListener {
         windowFrame.pack();
         windowFrame.setVisible(true);
 
-        //Kinect
-        kinect = new KinectTCPClient();
-        try{
-        int [][]dummy = kinect.readDepth();
-        }catch(Exception e){
-            kinect = null;
-        }
-        //
+//        //Kinect
+//        kinect = new KinectTCPClient();
+//        try{
+//        int [][]dummy = kinect.readDepth();
+//        }catch(Exception e){
+//            kinect = null;
+//        }
+//        //
+        frameCnt = 0;
+        frameIterator = frames.iterator();
+        state = PLAY;
+        
+        load();
+        state = PLAY;
         this.start();
     }
 
@@ -98,17 +104,17 @@ public class Mocap extends Thread implements ActionListener {
 
             switch (state) {
                 case STOP:
-                    if (kinect != null) {
-                        try {
-
-                            int[] raw = kinect.readSkeleton();
-                            joints = kinect.getJointPositions(raw, 1);
-                            skp.repaint();
-
-                        } catch (Exception e) {
-                        }
-                    }
-                    break;
+//                    if (kinect != null) {
+//                        try {
+//
+//                            int[] raw = kinect.readSkeleton();
+//                            joints = kinect.getJointPositions(raw, 1);
+//                            skp.repaint();
+//
+//                        } catch (Exception e) {
+//                        }
+//                    }
+//                    break;
                 case PLAY:
                     if (frameIterator.hasNext()) {
                         joints = frameIterator.next();
@@ -122,20 +128,20 @@ public class Mocap extends Thread implements ActionListener {
 
                     break;
                 case RECORD:
-                    if (kinect != null) {
-                        try {
-                            int[] raw = kinect.readSkeleton();
-                            int[][] jointFrame = kinect.getJointPositions(raw, 1);
-                            if (jointFrame != null) {
-                                joints = jointFrame;
-                                frames.addLast(jointFrame);
-                                frameCnt++;
-                            }
-                            skp.repaint();
-                        } catch (Exception e) {
-                        }
-                    }
-                    break;
+//                    if (kinect != null) {
+//                        try {
+//                            int[] raw = kinect.readSkeleton();
+//                            int[][] jointFrame = kinect.getJointPositions(raw, 1);
+//                            if (jointFrame != null) {
+//                                joints = jointFrame;
+//                                frames.addLast(jointFrame);
+//                                frameCnt++;
+//                            }
+//                            skp.repaint();
+//                        } catch (Exception e) {
+//                        }
+//                    }
+//                    break;
             }
 
             try {
@@ -202,40 +208,26 @@ public class Mocap extends Thread implements ActionListener {
     // -------------------------------------------------------------------------
     // load
     private void load() {
-        if (state == RECORD) {
-            JOptionPane.showMessageDialog(null, "Can't load while recording.");
-            return;
+
+        String filename = "CannonTest.serial";
+
+        try {
+            FileInputStream fileIn =
+                    new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            frames = (LinkedList<int[][]>) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (Exception ex) {
+            System.out.println("trouble");
         }
-        // get filename
-        JFileChooser fc = new JFileChooser(".");
-        int returnVal = fc.showOpenDialog(null);
-        String filename;
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
 
-            filename = fc.getSelectedFile().getAbsolutePath();
-
-            try {
-                FileInputStream fileIn =
-                        new FileInputStream(filename);
-                ObjectInputStream in = new ObjectInputStream(fileIn);
-                frames = (LinkedList<int[][]>) in.readObject();
-                in.close();
-                fileIn.close();
-            } catch (Exception ex) {
-                System.out.println("trouble");
-            }
-
-        }
     }
 
     // -------------------------------------------------------------------------
     // getJoints
-    public int[][]getJoints(){
-         return(joints);
+    public int[][] getJoints() {
+        return (joints);
     }
-
     // -------------------------------------------------------------------------
-    public static void main(String[] args) {
-        Mocap c = new Mocap();
-    }
 }
