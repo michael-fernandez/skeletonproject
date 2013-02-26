@@ -18,7 +18,6 @@ public class Environment {
 
     Geometry ground;  //this connects to the root node
    
-
     public Environment(Main main) {
         initFloor(main);
     }

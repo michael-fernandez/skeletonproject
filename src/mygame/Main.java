@@ -2,24 +2,17 @@ package mygame;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.light.DirectionalLight;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Matrix3f;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.RenderManager;
 import com.jme3.scene.Geometry;
-import com.jme3.scene.Node;
 import com.jme3.scene.debug.Arrow;
-import com.jme3.scene.shape.Box;
-import com.jme3.scene.shape.Cylinder;
 
 public class Main extends SimpleApplication {
 
     BulletAppState buildAppState; //look up AppStates (not entirely sure what they are
-    //These materials should not be here. Move to their local classes
-    Material matG, matB, matR, matW;
     KinectInterface kinect;
     KinectSkeleton kinectskeleton;
     Environment environment;
@@ -38,10 +31,8 @@ public class Main extends SimpleApplication {
         kinectskeleton = new KinectSkeleton(this);
 
         //Basic Lighting and Coordinates
-        //initMaterials();
         initLight();
         initCoord();
-        initPhysics();
 
         //Attach objects to the rootnode here:
         rootNode.attachChild(environment.ground);
@@ -67,7 +58,7 @@ public class Main extends SimpleApplication {
     }
 
     public void initCoord() {
-            //Set up materials for the arrows
+        //Set up materials for the arrows
         Material matG = new Material(getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         matG.setColor("Color", ColorRGBA.Green);
         Material matR = new Material(getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
@@ -89,11 +80,7 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(Yarrow);
         rootNode.attachChild(Zarrow);
     }
-
-    //Please move this
-    public void initPhysics() {
-    }
-
+    
     @Override
     public void simpleRender(RenderManager rm) {
         //TODO: add render code
