@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package mygame;
 
 import com.jme3.bullet.control.RigidBodyControl;
@@ -20,15 +17,17 @@ import com.jme3.scene.shape.Cylinder;
 //This is where the skeleton should be created
 public class KinectSkeleton {
 
-    Node skeleton = new Node(); //attach skeleton of person to it's own node
-    Geometry[] bones; //will make up the person
+    Node skeleton = new Node(); // this is the skeleton, which connects to the root node. 
+    //I moved this local as no one else will need this. Geometry[] bones; //will make up the person
 
+    
+    // you may wnat to move most of this out of the constructor.
     public KinectSkeleton(Main main) {
         Material matW = new Material(main.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         matW.setColor("Color", ColorRGBA.White);
         if (main.kinect.joint != null) {
             float[][] jointArray = {{(float) main.kinect.joint[10][1], (float) main.kinect.joint[10][2], (float) main.kinect.joint[10][3]}, {(float) main.kinect.joint[11][1], (float) main.kinect.joint[11][2], (float) main.kinect.joint[11][3]}};
-            bones = new Geometry[jointArray.length];
+            Geometry[] bones = new Geometry[jointArray.length];
             //start loop to connect all joints
             for (int i = 0; i < bones.length; i++) {
                 Cylinder c = new Cylinder(10, 10, 0.04f, 1f, true);

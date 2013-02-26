@@ -16,7 +16,7 @@ import com.jme3.scene.shape.Box;
  */
 public class Environment {
 
-    Geometry ground;
+    Geometry ground;  //this connects to the root node
    
 
     public Environment(Main main) {

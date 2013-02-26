@@ -15,17 +15,15 @@ import com.jme3.scene.debug.Arrow;
 import com.jme3.scene.shape.Box;
 import com.jme3.scene.shape.Cylinder;
 
-
-
 public class Main extends SimpleApplication {
 
     BulletAppState buildAppState; //look up AppStates (not entirely sure what they are
     //These materials should not be here. Move to their local classes
     Material matG, matB, matR, matW;
     KinectInterface kinect;
+    KinectSkeleton kinectskeleton;
     Environment environment;
     Mocap moCap;
-    
 
     public static void main(String[] args) {
         Main app = new Main();
@@ -36,15 +34,15 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         moCap = new Mocap();
         kinect = new KinectInterface(this);
-        environment=new Environment(this);
-        KinectSkeleton kinectskeleton=new KinectSkeleton(this);
+        environment = new Environment(this);
+        kinectskeleton = new KinectSkeleton(this);
 
         //Basic Lighting and Coordinates
         //initMaterials();
         initLight();
         initCoord();
         initPhysics();
-        
+
         //Attach objects to the rootnode here:
         rootNode.attachChild(environment.ground);
         rootNode.attachChild(kinectskeleton.skeleton);
@@ -61,7 +59,6 @@ public class Main extends SimpleApplication {
         //TODO: add update code
     }
 
-
     public void initLight() {
         //set directed light for diffuse lighting
         DirectionalLight sun = new DirectionalLight();
@@ -70,6 +67,14 @@ public class Main extends SimpleApplication {
     }
 
     public void initCoord() {
+            //Set up materials for the arrows
+        Material matG = new Material(getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+        matG.setColor("Color", ColorRGBA.Green);
+        Material matR = new Material(getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+        matR.setColor("Color", ColorRGBA.Red);
+        Material matB = new Material(getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+        matB.setColor("Color", ColorRGBA.Blue);
+        
         //set coordinate system so we can keep track of directions
         Arrow x = new Arrow(new Vector3f(1, 0, 0));
         Geometry Xarrow = new Geometry("Arrow", x);
@@ -85,10 +90,8 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(Zarrow);
     }
 
-    
     //Please move this
     public void initPhysics() {
-
     }
 
     @Override
