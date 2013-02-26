@@ -12,7 +12,7 @@ import com.jme3.scene.debug.Arrow;
 
 public class Main extends SimpleApplication {
 
-    BulletAppState buildAppState; //look up AppStates (not entirely sure what they are
+    BulletAppState bulletAppState; //look up AppStates (not entirely sure what they are
     KinectInterface kinect;
     KinectSkeleton kinectskeleton;
     Environment environment;
@@ -42,6 +42,10 @@ public class Main extends SimpleApplication {
         cam.setLocation(new Vector3f(5f, 3f, 5f));
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
         flyCam.setMoveSpeed(10);
+        
+        //set up the physics
+        bulletAppState = new BulletAppState();
+        stateManager.attach(bulletAppState);
     }
 
     @Override

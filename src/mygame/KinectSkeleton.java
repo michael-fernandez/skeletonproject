@@ -40,7 +40,7 @@ public class KinectSkeleton {
                 bones[i].addControl(phy);
                 phy.setKinematic(true);
                 //attach physics to world
-                main.buildAppState.getPhysicsSpace().add(phy);
+                main.bulletAppState.getPhysicsSpace().add(phy);
                 //attach to node so we can play
                 skeleton.attachChild(bones[i]);
             }
