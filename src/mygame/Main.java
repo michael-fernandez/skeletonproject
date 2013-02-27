@@ -18,6 +18,7 @@ public class Main extends SimpleApplication {
     Environment environment;
     Mocap moCap;
     Ball ball;
+    Target target;
     
     public static void main(String[] args) {
         Main app = new Main();
@@ -30,17 +31,15 @@ public class Main extends SimpleApplication {
         kinect = new KinectInterface(this);
         kinect.getData();
         environment = new Environment(this);
+        target = new Target(this);
         
         ball = new Ball(this);
         //Basic Lighting and Coordinates
         initLight();
         initCoord();
 
-        //Attach objects to the rootnode here:
-        //rootNode.attachChild(environment.ground);
         
         rootNode.attachChild(SkyFactory.createSky(assetManager, "/skysphere.jpg", true));
-        //rootNode.attachChild(ball.ball_tex);
         
         //set camera
         cam.setLocation(new Vector3f(5f, 3f, 5f));
