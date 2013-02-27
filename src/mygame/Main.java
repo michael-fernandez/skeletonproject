@@ -31,7 +31,9 @@ public class Main extends SimpleApplication {
         kinect = new KinectInterface(this);
         kinect.getData();
         environment = new Environment(this);
-        target = new Target(this);
+        target = new Target(this);       
+        kinectskeleton = new KinectSkeleton(this);
+        
         
         ball = new Ball(this);
         //Basic Lighting and Coordinates
@@ -52,8 +54,7 @@ public class Main extends SimpleApplication {
         bulletAppState.getPhysicsSpace().add(environment.rigidBody);
         bulletAppState.getPhysicsSpace().add(ball.rigidBody);
         
-        kinectskeleton = new KinectSkeleton(this);
-        rootNode.attachChild(kinectskeleton.skeleton);
+
     }
 
     @Override
