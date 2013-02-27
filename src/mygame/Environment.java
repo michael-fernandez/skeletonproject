@@ -4,6 +4,7 @@
  */
 package mygame;
 
+import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
 import com.jme3.bullet.collision.shapes.PlaneCollisionShape;
 import com.jme3.bullet.control.RigidBodyControl;
@@ -41,13 +42,15 @@ public class Environment {
         Material matG = new Material(main.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         
         ground.getMesh().scaleTextureCoordinates(new Vector2f(35,35));
-        text = main.getAssetManager().loadTexture("mygame/grass2.png");
+        text = main.getAssetManager().loadTexture("grass2.png");
         text.setWrap(Texture.WrapMode.Repeat);
         matG.setTexture("ColorMap", text);
         ground.setMaterial(matG);
         
-        shape = new PlaneCollisionShape();
-        rigidBody = new RigidBodyControl(shape,0f);
+        shape = new BoxCollisionShape();
+        rigidBody = new RigidBodyControl(0f);
         ground.addControl(rigidBody);
+        
+        main.getRootNode().attachChild(ground);
     }
 }

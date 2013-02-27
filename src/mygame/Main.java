@@ -19,7 +19,8 @@ public class Main extends SimpleApplication {
     KinectSkeleton kinectskeleton;
     Environment environment;
     Mocap moCap;
-
+    Ball ball;
+    
     public static void main(String[] args) {
         Main app = new Main();
         app.start();
@@ -30,17 +31,18 @@ public class Main extends SimpleApplication {
         moCap = new Mocap();
         kinect = new KinectInterface(this);
         environment = new Environment(this);
-        kinectskeleton = new KinectSkeleton(this);
-
+        
+        ball = new Ball(this);
         //Basic Lighting and Coordinates
         initLight();
         initCoord();
 
         //Attach objects to the rootnode here:
-        rootNode.attachChild(environment.ground);
-        rootNode.attachChild(kinectskeleton.skeleton);
-        rootNode.attachChild(SkyFactory.createSky(assetManager, "mygame/skysphere.jpg", true));
-
+        //rootNode.attachChild(environment.ground);
+        
+        rootNode.attachChild(SkyFactory.createSky(assetManager, "/skysphere.jpg", true));
+        //rootNode.attachChild(ball.ball_tex);
+        
         //set camera
         cam.setLocation(new Vector3f(5f, 3f, 5f));
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
@@ -48,9 +50,12 @@ public class Main extends SimpleApplication {
         
         //set up the physics
         bulletAppState = new BulletAppState();
-        
         stateManager.attach(bulletAppState);
         bulletAppState.getPhysicsSpace().add(environment.rigidBody);
+        bulletAppState.getPhysicsSpace().add(ball.rigidBody);
+        
+        kinectskeleton = new KinectSkeleton(this);
+        rootNode.attachChild(kinectskeleton.skeleton);
     }
 
     @Override
