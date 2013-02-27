@@ -54,6 +54,7 @@ public class Main extends SimpleApplication {
         bulletAppState.getPhysicsSpace().add(environment.rigidBody);
         bulletAppState.getPhysicsSpace().add(ball.rigidBody);
         kinectskeleton = new KinectSkeleton(this);
+        rootNode.attachChild(kinectskeleton.skeleton);
 
     }
 
