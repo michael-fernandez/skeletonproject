@@ -30,6 +30,7 @@ public class Main extends SimpleApplication {
     public void simpleInitApp() {
         moCap = new Mocap();
         kinect = new KinectInterface(this);
+        kinect.getData();
         environment = new Environment(this);
         
         ball = new Ball(this);
@@ -61,7 +62,7 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleUpdate(float tpf) {
         kinect.getData();
-        //TODO: add update code
+        kinectskeleton.updateMovements(this);
     }
 
     public void initLight() {
@@ -95,8 +96,5 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(Zarrow);
     }
     
-    @Override
-    public void simpleRender(RenderManager rm) {
-        //TODO: add render code
-    }
+
 }

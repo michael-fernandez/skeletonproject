@@ -1,4 +1,3 @@
-
 package mygame;
 
 import com.jme3.bullet.control.RigidBodyControl;
@@ -19,24 +18,25 @@ public class KinectSkeleton {
 
     Node skeleton = new Node(); // this is the skeleton, which connects to the root node. 
     //I moved bones local. Change it back if we will need it within main. 
+    Geometry[] bones = new Geometry[2];
 
-    
     // This should initalize the skeleton. Movements should be handled in update Movements
     public KinectSkeleton(Main main) {
         Material matW = new Material(main.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         matW.setColor("Color", ColorRGBA.White);
         if (main.kinect.joint != null) {
-            float[][] jointArray = {{(float) main.kinect.joint[10][1], (float) main.kinect.joint[10][2], (float) main.kinect.joint[10][3]}, {(float) main.kinect.joint[11][1], (float) main.kinect.joint[11][2], (float) main.kinect.joint[11][3]}};
-            Geometry[] bones = new Geometry[jointArray.length];
+            float[][] jointArray = {{(float) main.kinect.joint[9][1], (float) main.kinect.joint[9][2], (float) main.kinect.joint[9][3]}, {(float) main.kinect.joint[10][1], (float) main.kinect.joint[10][2], (float) main.kinect.joint[10][3]}};
+            
+            //bones = new Geometry[jointArray.length];
             //start loop to connect all joints
-            for (int i = 0; i < bones.length; i++) {
+            for (int i = 0; i < bones.length - 1; i++) {
                 Cylinder c = new Cylinder(10, 10, 0.04f, 1f, true);
                 //set geometry, connect and transform cylinder, set material
                 bones[i] = new Geometry("Cylinder", c);
-                setConnectiveTransform(jointArray[0], jointArray[1], bones[i]);
+                setConnectiveTransform(jointArray[i], jointArray[i + 1], bones[i]);
                 bones[i].setMaterial(matW);
                 //attach physics to bones
-                RigidBodyControl phy = new RigidBodyControl(0f); //0f = 0 mass
+                RigidBodyControl phy = new RigidBodyControl(1f); //0f = 0 mass
                 bones[i].addControl(phy);
                 phy.setKinematic(true);
                 //attach physics to world
@@ -44,14 +44,22 @@ public class KinectSkeleton {
                 //attach to node so we can play
                 skeleton.attachChild(bones[i]);
             }
-
+        } else {
+            System.out.println("NULL!");
         }
     }
 
-    public void updateMovements(){
-        
+    public void updateMovements(Main main) {
+        if (main.kinect.joint != null) {
+            float[][] jointArray = {{(float) main.kinect.joint[9][1], (float) main.kinect.joint[9][2], (float) main.kinect.joint[9][3]}, {(float) main.kinect.joint[10][1], (float) main.kinect.joint[10][2], (float) main.kinect.joint[10][3]}};
+            for (int i = 0; i < bones.length - 1; i++) {
+                setConnectiveTransform(jointArray[i], jointArray[i + 1], bones[i]);
+            }
+        } else {
+            System.out.println("NULL!");
+        }
     }
-    
+
     private void setConnectiveTransform(float[] p1, float[] p2, Geometry c) {
         //Find Direction
         Vector3f u = new Vector3f(p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]);
