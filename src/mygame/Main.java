@@ -19,7 +19,7 @@ public class Main extends SimpleApplication {
     Mocap moCap;
     Ball ball;
     Target target;
-    
+
     public static void main(String[] args) {
         Main app = new Main();
         app.start();
@@ -31,29 +31,29 @@ public class Main extends SimpleApplication {
         kinect = new KinectInterface(this);
         kinect.getData();
         environment = new Environment(this);
-        target = new Target(this);       
-        kinectskeleton = new KinectSkeleton(this);
-        
-        
+        target = new Target(this);
+
+
+
         ball = new Ball(this);
         //Basic Lighting and Coordinates
         initLight();
         initCoord();
 
-        
+
         rootNode.attachChild(SkyFactory.createSky(assetManager, "/skysphere.jpg", true));
-        
+
         //set camera
         cam.setLocation(new Vector3f(5f, 3f, 5f));
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
         flyCam.setMoveSpeed(10);
-        
+
         //set up the physics
         bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
         bulletAppState.getPhysicsSpace().add(environment.rigidBody);
         bulletAppState.getPhysicsSpace().add(ball.rigidBody);
-        
+        kinectskeleton = new KinectSkeleton(this);
 
     }
 
@@ -78,7 +78,7 @@ public class Main extends SimpleApplication {
         matR.setColor("Color", ColorRGBA.Red);
         Material matB = new Material(getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
         matB.setColor("Color", ColorRGBA.Blue);
-        
+
         //set coordinate system so we can keep track of directions
         Arrow x = new Arrow(new Vector3f(1, 0, 0));
         Geometry Xarrow = new Geometry("Arrow", x);
@@ -93,6 +93,4 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(Yarrow);
         rootNode.attachChild(Zarrow);
     }
-    
-
 }
