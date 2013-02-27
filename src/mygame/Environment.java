@@ -47,10 +47,9 @@ public class Environment {
         matG.setTexture("ColorMap", text);
         ground.setMaterial(matG);
         
-        shape = new BoxCollisionShape();
         rigidBody = new RigidBodyControl(0f);
         ground.addControl(rigidBody);
-        
+        rigidBody.setRestitution(0.5f);
         main.getRootNode().attachChild(ground);
     }
 }

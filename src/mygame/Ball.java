@@ -39,6 +39,7 @@ public class Ball {
         
         shape = new SphereCollisionShape(ball_shape.radius);
         rigidBody = new RigidBodyControl(shape,1f);
+        rigidBody.setRestitution(.99f);
         ball_tex.addControl(rigidBody);
         
         main.getRootNode().attachChild(ball_tex);
