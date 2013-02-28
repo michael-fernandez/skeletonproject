@@ -22,7 +22,7 @@ public class KinectSkeleton {
     // This should initalize the skeleton. Movements should be handled in update Movements
     public KinectSkeleton(Main main) {
         Material matW = new Material(main.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
-        matW.setColor("Color", ColorRGBA.White);
+        matW.setColor("Color", ColorRGBA.Black);
         if (main.kinect.joint != null) {
             //starting joints
             float[][] StartingJoint = {{(float) main.kinect.joint[10][1] / 1000f, (float) main.kinect.joint[10][2] / 1000f, (float) main.kinect.joint[10][3] / 1000f}, //right wrist
@@ -68,6 +68,9 @@ public class KinectSkeleton {
                 //attach to node so we can play
                 skeleton.attachChild(bones[i]);
             }
+            //float y = (float) main.kinect.joint[0][3] / 1000f+(float) main.kinect.joint[0][3] / 1000f;
+            skeleton.move(0,0.75f,0);
+            ;
         } else {
             System.out.println("NULL!");
         }

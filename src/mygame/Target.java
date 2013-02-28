@@ -12,8 +12,6 @@ public class Target {
     Geometry Geo_target;
 
     public Target(Main main) {
-
-
         target = new Cylinder(10, 20, 1f, .1f, true);
         Geo_target = new Geometry("Cylinder", target);
         Material mat_tex = new Material(main.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
@@ -23,6 +21,6 @@ public class Target {
         System.out.println("this happened");
         main.getRootNode().attachChild(Geo_target);
         System.out.println("this finished");
-
     }
+     
 }

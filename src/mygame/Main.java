@@ -27,13 +27,15 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        //set up the physics
+        bulletAppState = new BulletAppState();
+        stateManager.attach(bulletAppState);
+
         moCap = new Mocap();
         kinect = new KinectInterface(this);
         kinect.getData();
         environment = new Environment(this);
         target = new Target(this);
-
-
 
         ball = new Ball(this);
         //Basic Lighting and Coordinates
@@ -48,11 +50,9 @@ public class Main extends SimpleApplication {
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
         flyCam.setMoveSpeed(10);
 
-        //set up the physics
-        bulletAppState = new BulletAppState();
-        stateManager.attach(bulletAppState);
-        bulletAppState.getPhysicsSpace().add(environment.rigidBody);
-        bulletAppState.getPhysicsSpace().add(ball.rigidBody);
+       // bulletAppState.getPhysicsSpace().add(environment.rigidBody);
+       // bulletAppState.getPhysicsSpace().addCollisionObject(ball);
+     //   bulletAppState.getPhysicsSpace().add(ball.rigidBody);
         kinectskeleton = new KinectSkeleton(this);
         rootNode.attachChild(kinectskeleton.skeleton);
 

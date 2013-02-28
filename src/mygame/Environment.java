@@ -4,12 +4,17 @@
  */
 package mygame;
 
+import com.jme3.bullet.collision.PhysicsCollisionEvent;
+import com.jme3.bullet.collision.PhysicsCollisionListener;
+import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.collision.shapes.CollisionShape;
+import com.jme3.bullet.control.GhostControl;
 import com.jme3.bullet.control.RigidBodyControl;
 import com.jme3.material.Material;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 import com.jme3.texture.Texture;
 
@@ -20,12 +25,14 @@ import com.jme3.texture.Texture;
 
 
 
-public class Environment {
+public class Environment implements PhysicsCollisionListener{
 
     Geometry ground;  //this connects to the root node
     Texture text;
     CollisionShape shape;
     RigidBodyControl rigidBody;
+    GhostControl ghost;
+    Node groundNode;
     
     public Environment(Main main) {
         initFloor(main);
@@ -44,9 +51,22 @@ public class Environment {
         matG.setTexture("ColorMap", text);
         ground.setMaterial(matG);
         
+        shape = new BoxCollisionShape(new Vector3f(b.xExtent,b.yExtent,b.zExtent));
         rigidBody = new RigidBodyControl(0f);
         ground.addControl(rigidBody);
-        rigidBody.setRestitution(0.5f);
-        main.getRootNode().attachChild(ground);
+        
+        ghost = new GhostControl(shape);
+        groundNode = new Node();
+        groundNode.attachChild(ground);
+        groundNode.addControl(ghost);
+        
+        main.bulletAppState.getPhysicsSpace().addCollisionListener(this);
+        main.getRootNode().attachChild(groundNode);
+        main.bulletAppState.getPhysicsSpace().add(rigidBody);
+        main.bulletAppState.getPhysicsSpace().add(ghost);
+    }
+
+    public void collision(PhysicsCollisionEvent event) {
+      
     }
 }
