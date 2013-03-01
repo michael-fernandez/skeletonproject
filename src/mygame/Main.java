@@ -55,7 +55,7 @@ public class Main extends SimpleApplication {
         rootNode.attachChild(kinectskeleton.skeleton);
         score = new Score(this, guiNode, guiFont);
         ball = new Ball(this, kinectskeleton.bones[8].getWorldTranslation());//new Vector3f(0,10f,0));
-        
+        bulletAppState.getPhysicsSpace().enableDebug(assetManager);
 
     }
 
