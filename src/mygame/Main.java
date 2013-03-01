@@ -63,6 +63,10 @@ public class Main extends SimpleApplication {
     public void simpleUpdate(float tpf) {
         kinect.getData();
         kinectskeleton.updateMovements(this);
+        
+        if(ball.ballNode.getWorldTranslation().y < environment.groundNode.getWorldTranslation().y){
+            ball.resetPosition();
+        }
     }
 
     public void initLight() {
