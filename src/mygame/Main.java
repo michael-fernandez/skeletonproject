@@ -20,6 +20,7 @@ public class Main extends SimpleApplication {
     Ball ball;
     Target target;
     Score score;
+    DirectionalLight sun;
 
     public static void main(String[] args) {
         Main app = new Main();
@@ -71,7 +72,7 @@ public class Main extends SimpleApplication {
 
     public void initLight() {
         //set directed light for diffuse lighting
-        DirectionalLight sun = new DirectionalLight();
+        sun = new DirectionalLight();
         sun.setDirection(new Vector3f(-0.1f, -0.7f, -1f));
         rootNode.addLight(sun);
     }

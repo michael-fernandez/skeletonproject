@@ -43,12 +43,12 @@ public class Environment implements PhysicsCollisionListener{
         Box b = new Box(Vector3f.ZERO, 10f, 0.1f, 10f);
     
         ground = new Geometry("Box", b);
-        Material matG = new Material(main.getAssetManager(), "Common/MatDefs/Misc/Unshaded.j3md");
+        Material matG = new Material(main.getAssetManager(), "Common/MatDefs/Light/Lighting.j3md");
         
         ground.getMesh().scaleTextureCoordinates(new Vector2f(35,35));
         text = main.getAssetManager().loadTexture("grass2.png");
         text.setWrap(Texture.WrapMode.Repeat);
-        matG.setTexture("ColorMap", text);
+        matG.setTexture("DiffuseMap", text);
         ground.setMaterial(matG);
         
         shape = new BoxCollisionShape(new Vector3f(b.xExtent,b.yExtent,b.zExtent));
