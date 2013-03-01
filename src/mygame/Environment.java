@@ -60,7 +60,7 @@ public class Environment implements PhysicsCollisionListener{
         groundNode.attachChild(ground);
         groundNode.addControl(ghost);
         
-        main.bulletAppState.getPhysicsSpace().addCollisionListener(this);
+        //main.bulletAppState.getPhysicsSpace().addCollisionListener(this);
         main.getRootNode().attachChild(groundNode);
         main.bulletAppState.getPhysicsSpace().add(rigidBody);
         main.bulletAppState.getPhysicsSpace().add(ghost);

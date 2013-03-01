@@ -19,6 +19,7 @@ public class Main extends SimpleApplication {
     Mocap moCap;
     Ball ball;
     Target target;
+    Score score;
 
     public static void main(String[] args) {
         Main app = new Main();
@@ -37,7 +38,7 @@ public class Main extends SimpleApplication {
         environment = new Environment(this);
         target = new Target(this);
 
-        ball = new Ball(this);
+        
         //Basic Lighting and Coordinates
         initLight();
         initCoord();
@@ -50,11 +51,11 @@ public class Main extends SimpleApplication {
         cam.lookAt(Vector3f.ZERO, Vector3f.UNIT_Y);
         flyCam.setMoveSpeed(10);
 
-       // bulletAppState.getPhysicsSpace().add(environment.rigidBody);
-       // bulletAppState.getPhysicsSpace().addCollisionObject(ball);
-     //   bulletAppState.getPhysicsSpace().add(ball.rigidBody);
         kinectskeleton = new KinectSkeleton(this);
         rootNode.attachChild(kinectskeleton.skeleton);
+        score = new Score(this, guiNode, guiFont);
+        ball = new Ball(this, kinectskeleton.bones[8].getWorldTranslation());//new Vector3f(0,10f,0));
+        
 
     }
 
